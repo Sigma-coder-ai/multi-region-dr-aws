@@ -1,0 +1,70 @@
+{
+  "label": "REAL-AWS",
+  "run_id": "7d867a",
+  "drill_id": "aws-health-blip-f499de",
+  "scenario": "health-blip",
+  "description": "Home health check fails for ~75 s (one controller tick). Must not fail over.",
+  "source": "ap-south-1",
+  "target": "ap-southeast-1",
+  "t0": 1792313443.0416365,
+  "events": {
+    "t1_first_failed_probe": 12.6,
+    "t2_decision": null,
+    "t3_promoted": null,
+    "alert": null
+  },
+  "metrics": {
+    "detection_s": 12.595,
+    "decision_s": null,
+    "promotion_s": null,
+    "read_outage_s": 0.0,
+    "read_rto_s": null,
+    "write_rto_s": null,
+    "lost_writes": 0,
+    "rpo_s": 0.0,
+    "writes_total": 300,
+    "writes_failed": 0,
+    "read_p50_ms": 116.6,
+    "read_p95_ms": 158.3
+  },
+  "failover": null,
+  "failback": null,
+  "checks": [
+    {
+      "check": "no failover happened",
+      "passed": true,
+      "observed": null
+    },
+    {
+      "check": "home region still active",
+      "passed": true,
+      "observed": "ap-south-1"
+    }
+  ],
+  "late_arrivals": 0,
+  "retried_workflows": [],
+  "settings": {
+    "controller_tick_s": 60,
+    "probe_timeout_s": 3.0,
+    "scorer": {
+      "window": 6,
+      "failover_threshold": 40,
+      "consecutive_bad": 3,
+      "fast_path_hard_failures": 2,
+      "latency_good_ms": 800,
+      "latency_bad_ms": 3000
+    },
+    "workflow": {
+      "drain_max_s": 30.0,
+      "replication_ok_pending": 0,
+      "cooldown_s": 300.0,
+      "verify_timeout_s": 120.0,
+      "failback_min_healthy_s": 120.0,
+      "lock_ttl_s": 600.0,
+      "alert_repeat_s": 1800.0
+    },
+    "write_interval_s": 1.0,
+    "read_interval_s": 2.0
+  },
+  "passed": true
+}

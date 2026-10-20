@@ -1,0 +1,56 @@
+# Local simulation profile. Timings are SCALED DOWN so a drill finishes in seconds.
+# Results produced with this profile are always labelled SIMULATED and are not AWS evidence.
+
+mode = "local-sim"
+home_region = "ap-south-1"
+
+[[regions]]
+name = "ap-south-1"
+label = "Mumbai"
+port = 8101
+
+[[regions]]
+name = "ap-southeast-1"
+label = "Singapore"
+port = 8102
+
+[router]            # stands in for CloudFront origin-group failover
+port = 8100
+origin_timeout_s = 0.5
+regional_timeout_s = 2.0
+
+[replication]       # stands in for S3 two-way Cross-Region Replication
+lag_s = 0.3
+jitter_s = 0.1
+
+[probe]
+interval_s = 0.5
+timeout_s = 0.4
+
+[scorer]
+window = 6
+failover_threshold = 40
+consecutive_bad = 3
+fast_path_hard_failures = 3
+latency_good_ms = 300
+latency_bad_ms = 2000
+
+[workflow]
+drain_max_s = 2.0
+replication_ok_pending = 0
+cooldown_s = 10.0
+verify_timeout_s = 15.0
+failback_min_healthy_s = 3.0
+lock_ttl_s = 60.0
+alert_repeat_s = 30.0
+
+[app]
+peer_fencing = true
+peer_timeout_s = 0.3
+peer_cache_s = 1.0
+
+[drill]
+write_interval_s = 0.05
+read_interval_s = 0.1
+write_deadline_s = 30.0
+settle_s = 1.5

@@ -1,0 +1,183 @@
+{
+  "label": "REAL-AWS",
+  "run_id": "7d867a",
+  "drill_id": "aws-gray-errors-ac0824",
+  "scenario": "gray-errors",
+  "description": "Home app answers 70% of requests with HTTP 500.",
+  "source": "ap-south-1",
+  "target": "ap-southeast-1",
+  "t0": 1792324987.9433315,
+  "events": {
+    "t1_first_failed_probe": 51.0,
+    "t2_decision": 230.9,
+    "t3_promoted": 252.0,
+    "alert": null
+  },
+  "metrics": {
+    "detection_s": 50.967,
+    "decision_s": 179.896,
+    "promotion_s": 21.186,
+    "read_outage_s": 0.0,
+    "read_rto_s": 0.723,
+    "write_rto_s": 253.543,
+    "lost_writes": 0,
+    "rpo_s": 0.0,
+    "writes_total": 145,
+    "writes_failed": 0,
+    "read_p50_ms": 210.9,
+    "read_p95_ms": 623.4
+  },
+  "failover": {
+    "name": "failover",
+    "run_id": "failover-99716dca",
+    "ok": true,
+    "outcome": "failed_over",
+    "steps": [
+      {
+        "step": "reassess",
+        "duration_s": 6.358,
+        "source_failures": 2,
+        "standby_ready": true,
+        "confirmed": true
+      },
+      {
+        "step": "drain",
+        "duration_s": 14.349,
+        "source": "ap-south-1",
+        "pending": 0,
+        "oldest_pending_age_s": 0.0,
+        "drained": true,
+        "pending_keys_sample": []
+      },
+      {
+        "step": "promote",
+        "duration_s": 0.135,
+        "promoted": true,
+        "epoch": 14,
+        "demoted": "ap-south-1"
+      },
+      {
+        "step": "notify",
+        "duration_s": 0.115,
+        "notified": true
+      },
+      {
+        "step": "verify",
+        "duration_s": 1.058,
+        "reads_ok": true,
+        "writes_ok": true,
+        "target": "ap-southeast-1"
+      }
+    ],
+    "details": {}
+  },
+  "failback": {
+    "outcome": "failed_back",
+    "duration_s": 544.5,
+    "write_freeze_s": 419.9,
+    "steps": [
+      {
+        "step": "preconditions",
+        "duration_s": 124.086,
+        "ok": true,
+        "active": "ap-southeast-1",
+        "healthy_probes": 30
+      },
+      {
+        "step": "freeze_writes",
+        "duration_s": 0.594,
+        "frozen": true,
+        "epoch": 15
+      },
+      {
+        "step": "drain_to_home",
+        "duration_s": 18.022,
+        "source": "ap-southeast-1",
+        "pending": 0,
+        "oldest_pending_age_s": 0.0,
+        "drained": true,
+        "pending_keys_sample": []
+      },
+      {
+        "step": "verify_data",
+        "duration_s": 399.483,
+        "consistent": true,
+        "objects": 1664,
+        "mismatched": []
+      },
+      {
+        "step": "await_control_sync",
+        "duration_s": 0.212,
+        "synced": true,
+        "epoch": 15
+      },
+      {
+        "step": "promote_home",
+        "duration_s": 0.467,
+        "epoch": 16
+      },
+      {
+        "step": "verify_traffic",
+        "duration_s": 1.643,
+        "reads_ok": true,
+        "writes_ok": true,
+        "target": "ap-south-1"
+      }
+    ],
+    "writes_acked": 137,
+    "lost_writes": 0
+  },
+  "checks": [
+    {
+      "check": "failover workflow completed",
+      "passed": true,
+      "observed": "failed_over"
+    },
+    {
+      "check": "DR region holds write authority",
+      "passed": true,
+      "observed": "ap-southeast-1"
+    },
+    {
+      "check": "writes resumed in DR",
+      "passed": true,
+      "observed": 253.543
+    },
+    {
+      "check": "failback completed",
+      "passed": true,
+      "observed": "failed_back"
+    },
+    {
+      "check": "failback lost 0 writes (planned RPO = 0)",
+      "passed": true,
+      "observed": 0
+    }
+  ],
+  "late_arrivals": 0,
+  "retried_workflows": [],
+  "settings": {
+    "controller_tick_s": 60,
+    "probe_timeout_s": 3.0,
+    "scorer": {
+      "window": 10,
+      "failover_threshold": 40,
+      "consecutive_bad": 3,
+      "fast_path_hard_failures": 2,
+      "latency_good_ms": 800,
+      "latency_bad_ms": 3000
+    },
+    "workflow": {
+      "drain_max_s": 30.0,
+      "replication_ok_pending": 0,
+      "cooldown_s": 300.0,
+      "verify_timeout_s": 120.0,
+      "failback_min_healthy_s": 120.0,
+      "lock_ttl_s": 600.0,
+      "alert_repeat_s": 1800.0
+    },
+    "write_interval_s": 1.0,
+    "read_interval_s": 2.0
+  },
+  "passed": true
+}

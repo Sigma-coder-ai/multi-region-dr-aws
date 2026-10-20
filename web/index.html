@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DR Live Monitor</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --text: #1d2330; --muted: #5b6475; --border: #dde1e8;
+    --ok: #1f8a4c; --warn: #b26a00; --bad: #c0362c; --mumbai: #1f8a4c; --singapore: #d9730d; --accent: #3557d6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #12151b; --panel: #1b2029; --text: #e6e9ef; --muted: #9aa3b5; --border: #2c3340;
+            --ok: #3fbf74; --warn: #e3a33b; --bad: #ef6b5f; --mumbai: #3fbf74; --singapore: #f0913a; --accent: #7b96ff; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+  .sim { background: var(--warn); color: #111; text-align: center; font-weight: 700; padding: 8px 16px; letter-spacing: .02em; }
+  main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 22px; margin: 8px 0 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+  .card h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 8px; }
+  .badge { font-size: 28px; font-weight: 800; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1px solid var(--border); }
+  .ok { color: var(--ok); } .bad { color: var(--bad); } .warn { color: var(--warn); }
+  button { font: inherit; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel); color: var(--text); cursor: pointer; margin: 2px 4px 2px 0; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  td, th { text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .events { max-height: 340px; overflow: auto; }
+  code { font-size: 12px; }
+  .bar { height: 10px; border-radius: 5px; background: var(--border); overflow: hidden; }
+  .bar > div { height: 100%; background: var(--ok); transition: width .3s; }
+</style>
+</head>
+<body>
+<div class="sim">SIMULATION MODE: local processes only. Results are labelled SIMULATED and are not AWS evidence.</div>
+<main>
+  <h1>DR Live Monitor</h1>
+  <div class="grid">
+    <div class="card">
+      <h2>Serving region (via edge)</h2>
+      <div id="serving" class="badge">…</div>
+      <div class="muted" id="serving-detail"></div>
+    </div>
+    <div class="card">
+      <h2>Write authority</h2>
+      <div id="active" class="badge">…</div>
+      <div class="muted" id="epoch"></div>
+    </div>
+    <div class="card">
+      <h2>Health score (active region)</h2>
+      <div id="score" class="badge">…</div>
+      <div class="bar"><div id="score-bar" style="width:100%"></div></div>
+      <div class="muted" id="decision"></div>
+    </div>
+  </div>
+
+  <div class="grid" style="margin-top:12px">
+    <div class="card" id="regions"></div>
+    <div class="card">
+      <h2>Inject a fault (simulation only)</h2>
+      <div id="fault-buttons"></div>
+      <h2 style="margin-top:12px">Recovery</h2>
+      <button class="primary" id="failback">Approve controlled failback</button>
+      <div class="muted">Failback is never automatic. It freezes writes, verifies data, then promotes the home region.</div>
+      <h2 style="margin-top:12px">Test write</h2>
+      <button id="write">Write a note</button> <span class="muted" id="write-result"></span>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h2>Timeline (SIMULATED)</h2>
+    <div class="events"><table><thead><tr><th>Time</th><th>Event</th><th>Details</th></tr></thead><tbody id="events"></tbody></table></div>
+  </div>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>

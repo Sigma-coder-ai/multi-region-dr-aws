@@ -1,0 +1,10 @@
+# Upload only what the Docker image needs
+.venv/
+.sim/
+evidence/
+build/
+.claude/
+.aws-deploy.json
+.env
+*.pem
+**/__pycache__/

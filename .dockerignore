@@ -1,0 +1,14 @@
+.venv/
+.sim/
+evidence/
+build/
+docs/
+tests/
+scripts/
+.claude/
+.aws-deploy.json
+.env
+*.pem
+**/__pycache__/
+*.egg-info/
+*.bat

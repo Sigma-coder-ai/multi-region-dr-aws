@@ -1,0 +1,131 @@
+{
+  "label": "REAL-AWS",
+  "test": "gate1-two-way-s3-crr",
+  "regions": [
+    "ap-south-1",
+    "ap-southeast-1"
+  ],
+  "home_to_dr": [
+    {
+      "key": "gate1/ap-south-1-to-ap-southeast-1/003.json",
+      "put_at": 1792306613.242323,
+      "etag": "691f39212d6e5e18204feb9a5b4d1339",
+      "seen_at": 1792306636.7381458,
+      "lag_s": 23.5,
+      "replication_status": "REPLICA",
+      "etag_match": true
+    },
+    {
+      "key": "gate1/ap-south-1-to-ap-southeast-1/004.json",
+      "put_at": 1792306613.3906717,
+      "etag": "f6940de51159fcd2b2ee127e37ed1530",
+      "seen_at": 1792306636.8343074,
+      "lag_s": 23.4,
+      "replication_status": "REPLICA",
+      "etag_match": true
+    },
+    {
+      "key": "gate1/ap-south-1-to-ap-southeast-1/000.json",
+      "put_at": 1792306612.3911622,
+      "etag": "cd0a127aefa1746e6cdc290cf0d6962e",
+      "seen_at": 1792306638.3144772,
+      "lag_s": 25.9,
+      "replication_status": "REPLICA",
+      "etag_match": true
+    },
+    {
+      "key": "gate1/ap-south-1-to-ap-southeast-1/001.json",
+      "put_at": 1792306612.7427003,
+      "etag": "faf1999411e652039de687080b7050c8",
+      "seen_at": 1792306638.569654,
+      "lag_s": 25.8,
+      "replication_status": "REPLICA",
+      "etag_match": true
+    },
+    {
+      "key": "gate1/ap-south-1-to-ap-southeast-1/002.json",
+      "put_at": 1792306613.087294,
+      "etag": "aa4ce2ea2502c7b107af48666be6170b",
+      "seen_at": 1792306638.7325046,
+      "lag_s": 25.6,
+      "replication_status": "REPLICA",
+      "etag_match": true
+    }
+  ],
+  "dr_to_home": [
+    {
+      "key": "gate1/ap-southeast-1-to-ap-south-1/000.json",
+      "put_at": 1792306639.97636,
+      "etag": "f7caa5d04cdcf7a7ba21dbfbd6b411e4",
+      "seen_at": 1792306662.4071994,
+      "lag_s": 22.4,
+      "replication_status": "REPLICA",
+      "etag_match": true
+    },
+    {
+      "key": "gate1/ap-southeast-1-to-ap-south-1/001.json",
+      "put_at": 1792306640.161299,
+      "etag": "bb7a9166cae00cb11d381a4a251e0786",
+      "seen_at": 1792306662.452933,
+      "lag_s": 22.3,
+      "replication_status": "REPLICA",
+      "etag_match": true
+    },
+    {
+      "key": "gate1/ap-southeast-1-to-ap-south-1/002.json",
+      "put_at": 1792306640.3069484,
+      "etag": "c57ac7d3fd7dd065ca77bc95aa736cba",
+      "seen_at": 1792306662.4972012,
+      "lag_s": 22.2,
+      "replication_status": "REPLICA",
+      "etag_match": true
+    },
+    {
+      "key": "gate1/ap-southeast-1-to-ap-south-1/003.json",
+      "put_at": 1792306640.5604281,
+      "etag": "25b6387371d2456c5bde3b549c5de114",
+      "seen_at": 1792306662.573101,
+      "lag_s": 22.0,
+      "replication_status": "REPLICA",
+      "etag_match": true
+    },
+    {
+      "key": "gate1/ap-southeast-1-to-ap-south-1/004.json",
+      "put_at": 1792306640.8753114,
+      "etag": "19f8c1d3230585e4249313e1f104ba60",
+      "seen_at": 1792306662.6124973,
+      "lag_s": 21.7,
+      "replication_status": "REPLICA",
+      "etag_match": true
+    }
+  ],
+  "adapter": {
+    "if_none_match_enforced": true,
+    "if_match_enforced": true,
+    "if_match_with_correct_etag_ok": true,
+    "metadata_roundtrip": true,
+    "stale_epoch_fenced": true,
+    "control_after_promotion": {
+      "active_region": "ap-southeast-1",
+      "epoch": 2,
+      "demoted": "ap-south-1"
+    },
+    "promotion_epoch": 2
+  },
+  "cleanup": {
+    "buckets_deleted": [
+      "dr-gate1-2e0a38a1-aps1",
+      "dr-gate1-2e0a38a1-apse1"
+    ],
+    "roles_deleted": [
+      "dr-gate1-replication-2e0a38a1"
+    ],
+    "errors": []
+  },
+  "verify_clean": {
+    "leftover_buckets": [],
+    "leftover_roles": [],
+    "clean": true
+  },
+  "duration_s": 71.8
+}
